@@ -1,0 +1,50 @@
+"""exo1"""
+import httplib
+import pdb
+import sys
+LOG = False
+if len(sys.argv) > 2:
+    LOG = True
+URL = "http://www.python.org/index.html"
+if len(sys.argv) > 1:
+    URL = sys.argv[1]
+
+
+def logger( folder, message ):
+    """logger function"""
+    if LOG:
+        folder.write(message)
+
+
+def connexion():
+    """ma fonction de connexion"""
+    folder = open("log.txt","w")
+    pdb.set_trace()
+    """permet de s'arreter a cette instruction :n pour next construction,c pour continuer et l pour la laibririe"""
+
+    h1 = httplib.HTTPConnection("cache.univ-st-etienne.fr", 3128)
+    h1.request("GET", URL)
+    REPONSE = h1.getresponse()
+    print REPONSE.status, REPONSE.reason
+    logger(folder,"status : %s" %str(REPONSE.status))
+    page = REPONSE.read()
+    caractere = " "
+    count = 1
+    try:
+        pageSplet = page.split(caractere)
+        print "secceed"
+    except:
+        print"erreur"
+        
+        
+    
+    for i in page:
+        if i == " ":
+            count = count+1
+    print count
+    folder.close()
+
+
+
+
+connexion()
